@@ -3,6 +3,7 @@ import argparse
 from readfasta import readfasta
 import time
 import random
+import datetime
 
 parser =  argparse.ArgumentParser(description="Prepare a dot plot for two "
                                               + "FASTA sequences")
@@ -52,7 +53,8 @@ for i in range(len(sequences)):
 fastaFile.write("\n")
 fastaFile.close()
 
-print("Wrote the bootstrap (randomized) sequences to disk. (File name "
+now = datetime.datetime.now()
+print(now.strftime("%Y-%m-%d %H:%M") + ": Wrote the bootstrap (randomized) sequences to disk. (File name "
       + fastaFileName + " in your current working directory.)" )
 
 
@@ -62,6 +64,7 @@ fileName = "alignments_" + bootstrapID + ".txt"
 allAlignments = [ [OptimalAlignment() for x in range(len(sequences))]
                   for x in range(len(sequences))]
 allScores = [] # List of tuples: (score, position-in-allAlignments-tuple)
+theCount = 0
 for x in range(len(sequences)):
     for y in range(0, x):
         theAlignment = OptimalAlignment( sequences[x], sequences[y] )
@@ -73,7 +76,9 @@ for x in range(len(sequences)):
         file.write( "\n" )
         file.close()
         allScores.append( theAlignment.getScore() )
-        print("Finished a pass! Just " + str(120 - x) + " to go!")
+        theCount += 1
+        now = datetime.datetime.now()
+        print(now.strftime("%Y-%m-%d %H:%M") + ": Finished a pass! Just " + str(120 - theCount) + " to go!")
 
 allScores.sort() # highest-scoring is first
 file = open(fileName, "a")
