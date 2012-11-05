@@ -131,6 +131,8 @@ args = parser.parse_args()
 
 allSequenceData = readfasta(args.file)
 
+print(len(allSequenceData))
+
 
 genomes = [ "GATCACAGGTCTATCACCCTATTAACCACTCACGGGAGCTCTCCATGCATTTGGTATTTTCG",
             "GATCACAGGTCTATCACCCTATTAACCACTCACGGGAGCTCTCCATGCATTTGGTATTTTCGTCTGG",

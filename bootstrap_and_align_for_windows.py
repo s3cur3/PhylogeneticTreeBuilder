@@ -74,7 +74,7 @@ while True:
             allScores.append( theAlignment.getScore() )
             theCount += 1
             now = datetime.datetime.now()
-            print(now.strftime("%Y-%m-%d %H:%M") + ": Finished a pass! Just " + str(120 - theCount) + " to go!")
+            print(now.strftime("%Y-%m-%d %H:%M") + ": Finished a pass! Just " + str(91 - theCount) + " to go!")
 
     allScores.sort() # highest-scoring is first
     file = open(fileName, "a")
