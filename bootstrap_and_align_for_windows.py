@@ -5,12 +5,7 @@ import time
 import random
 import datetime
 
-parser =  argparse.ArgumentParser(description="Prepare a dot plot for two "
-                                              + "FASTA sequences")
-parser.add_argument("file", type=str,
-                    help="The path to the FASTA file "
-                         + "containing all sequences to be compared.")
-args = parser.parse_args()
+allSequenceData = readfasta("mtDNA.fasta")
 
 while True:
     allSequenceData = readfasta(args.file)
