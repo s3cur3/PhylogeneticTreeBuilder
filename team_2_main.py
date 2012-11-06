@@ -10,7 +10,7 @@ import os
 import math
 from readfasta import readfasta
 from team_2_neighbor_joining import doNeighborJoining
-from team_2_optimal_alignment_simple import *
+from team_2_pairwise_alignments import writePairwiseAlignmentFile
 from team_2_bootstrapping import bootstrapAlignmentsToFile
 
 
@@ -26,18 +26,30 @@ parser =  argparse.ArgumentParser(description="Takes a set of FASTA sequences an
 parser.add_argument("fastaFile", type=str,
                     help="The path to the FASTA file "
                          + "containing all sequences to be compared.")
-parser.add_argument("pairwiseComparisonFile", type=str,
+parser.add_argument("-p", "--pairwiseComparisonFile", type=str,
+                    required=False, default="",
                     help="The path to the alignment file "
-                         + "containing all pairwise alignments and their scores.")
+                         + "containing all pairwise alignments and their scores. "
+                         + "If this is not present, we will generate all pairwise "
+                         + "comparisons (may take a very long time!!).")
 parser.add_argument("-b", "--bootstrap", type=int, default=1000,
-                    help="The number of bootstrapping iterations to perform" )
+                    help="The number of bootstrapping iterations to perform. "
+                         + "Reasonable values range from one to ten thousand. "
+                           "These are computationally cheap (seconds per round)." )
 args = parser.parse_args()
-
-
 
 allTrees = {} # Simply counts the occurrence of each tree
 canonicalFasta = readfasta(args.fastaFile)
 canonicalComparisons = args.pairwiseComparisonFile
+
+# Run all pairwise comparisons if necessary
+# This will give us the "canonical comparison" file
+if (canonicalComparisons == "") or (not os.path.exists(canonicalComparisons)):
+    print("Pairwise comparison filing missing or absent. Running all comparisons...")
+    if canonicalComparisons == "":
+        fastaName = (args.fastaFile).rstrip(".fasta")
+        canonicalComparisons = fastaName + ".txt"
+    writePairwiseAlignmentFile( canonicalFasta, canonicalComparisons )
 
 # Build the "canonical" phylogenetic tree and add it to the collection of all trees
 canonicalFinalNode = doNeighborJoining(canonicalComparisons, canonicalFasta)

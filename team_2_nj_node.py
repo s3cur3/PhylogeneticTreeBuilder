@@ -1,5 +1,7 @@
 '''
 A class to represent nodes in a tree for neighbor-joining.
+
+Tyler Young
 '''
 
 class NeighborJoiningNode:

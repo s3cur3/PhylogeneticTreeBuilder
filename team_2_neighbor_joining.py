@@ -2,6 +2,8 @@
 A set of tools for getting a phylogenetic tree from alignment data.
 Use the doNeighborJoining() method as the preferred way of getting the phylogeny
 directly from your combination of alignment and FASTA data.
+
+Tyler Young
 '''
 
 

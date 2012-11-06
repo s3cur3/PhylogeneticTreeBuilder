@@ -1,3 +1,9 @@
+'''
+Tools for working with FASTA alignments.
+
+Tyler Young
+'''
+
 def getConsensusLetter(char0, char1):
     '''
     @return The FASTA consensus letter of 2 mismatched characters

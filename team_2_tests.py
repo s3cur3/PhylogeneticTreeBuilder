@@ -1,5 +1,7 @@
 '''
 Runs a number of tests on the classes and functions in our phylogeny generator
+
+Tyler Young
 '''
 
 from team_2_optimal_alignment_sensitive import *
