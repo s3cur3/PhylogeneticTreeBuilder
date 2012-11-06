@@ -94,26 +94,14 @@ align_all.py
 
 *.txt
 
-bootstrap120238.fasta
+useless alignments/
 
-bootstrap254664.fasta
+*.tre~
 
-bootstrap254903.fasta
+*.txt~
 
-bootstrap254743.fasta
+bootstrap98841.tre
 
-bootstrap254919.fasta
+m_2_optimal_alignment.py
 
-bootstrap254666.fasta
-
-bootstrap204223.fasta
-
-bootstrap204213.fasta
-
-bootstrap98845.fasta
-
-bootstrap98841.fasta
-
-bootstrap254914.fasta
-
-bootstrap98899.fasta
+m_2_optimal_alignment.py

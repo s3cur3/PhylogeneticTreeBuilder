@@ -31,7 +31,7 @@ def readfasta(filename):
 
     # process the first line, which must be a header line
     line = infile.readline()
-    headerLine = line[1:].rstrip()
+    headerLine = line
     label = parseHeaderLine(headerLine)
 
     # initialize the sequence accumulator
