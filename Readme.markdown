@@ -11,5 +11,5 @@ environment (Linux or Mac OS). Then, do the following:
 	- If you have problems, get help by running:
 	    - `$ python3 team_2_main.py -h`
 4. The program will churn for a long time, first to generate all pairwise sequence comparisons (which it will write to a file in your working directory, named `<your FASTA file name>.txt`) and then to bootstrap your aligments.
-5. When it finishes, the program will tally up the number of times that a given phylogenetic tree occurred. To visualize the tree, copy its text (which looks something like `(H. sapiens Navaho, (H. sapiens German, H. sapiens Japan));`) into a `.tre` file and open it in a tree visualization program like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/).
+5. When it finishes, the program will tally up the number of times that a given phylogenetic tree occurred. To visualize the tree, copy its text (which looks something like `(H. sapiens Navaho, (H. sapiens German, H. sapiens Japan));`) into a `.tre` file and open it in a tree visualization program like [FigTree](http://tree.bio.ed.ac.uk/software/figtree/). 
 
