@@ -8,6 +8,19 @@ from team_2_optimal_alignment_sensitive import *
 from team_2_neighbor_joining import *
 from readfasta import readfasta
 from team_2_bootstrapping import getBootstrappedSequences
+import time
+
+fastaData = readfasta("mtDNA.fasta")
+distMatrix = constructMatrixFromFile("mtDNA_alignments_with_gorilla_original.txt", fastaData)
+for i in range(len(distMatrix)):
+    print(fastaData[i][1],distMatrix[i])
+for i in range(len(distMatrix)):
+    print(distMatrix[i])
+
+finalNode = getNeighborJoiningPhylogeny(getNeighborJoiningSequences(fastaData), distMatrix)
+print(finalNode.getTreeFile())
+
+exit(1)
 
 genomes = [ "AATCACAGGTCTATCACCCTATTAACCACTCACGGGAGCTCTCCATGCATTTGGTATTTTCG",
             "GATCACAGGTCTATCACCCTATTAACCACTCACGGGAGCTCTCCATGCATTTGGTATTTTCGTCTGG",
@@ -68,3 +81,5 @@ realOutputOfReadFASTA = readfasta(dir + "mtDNA.fasta")
 print("\nBootstrapping on a real sequence (truncated)")
 for seq in getBootstrappedSequences(realOutputOfReadFASTA):
     print(seq[0:100])
+
+

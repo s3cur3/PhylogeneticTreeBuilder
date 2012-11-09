@@ -109,3 +109,7 @@ m_2_optimal_alignment.py
 .#Readme.markdown
 
 dummy.fasta
+
+*.tre
+
+team_2_optimal_alignment_sensitive.py~

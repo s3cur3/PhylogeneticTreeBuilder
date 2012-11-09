@@ -4,18 +4,18 @@ Tyler Young
 1 November 2012
 '''
 
-GAP_START_PENALTY = -8
-GAP_CONTINUATION_PENALTY = -2
+GAP_START_PENALTY = -7
+GAP_CONTINUATION_PENALTY = -4
 TRANSITION = -1
-TRANSVERSION = -4
-MATCH = 5
+TRANSVERSION = -3
+MATCH = 1
 
 from team_2_fasta_tools import getConsensusLetter
 import array
-import time
 
 DEFAULT_SCORE = -1000
 
+# TODO: Make this use the sensitive scoring!
 def scoreConsensusSequence( consensusSequence, paddingChar='' ):
     '''
     Examines the consensus sequence and deduces what alignment must have produced
@@ -26,22 +26,15 @@ def scoreConsensusSequence( consensusSequence, paddingChar='' ):
     @return The score of the consensus sequence
     '''
     score = 0
-    prevWasGapPenalty = False
     for letter in consensusSequence:
         if letter in "ATCGU":
             score += MATCH
         elif letter in "X-":
-            if prevWasGapPenalty:
-                score += GAP_CONTINUATION_PENALTY
-            else:
-                score += GAP_START_PENALTY
-                prevWasGapPenalty = True
+            score += GAP_PENALTY
         elif letter == paddingChar:
             score += 0
-        elif letter in "RY": # Transitions
-            score += TRANSITION
-        else:
-            score += TRANSVERSION
+        else: # was a mismatch
+            score += MISMATCH
     return score
 
 class OptimalAlignment:
@@ -79,6 +72,7 @@ class OptimalAlignment:
     def getConsensusSeq(self):
         return self.consensusSeq
 
+    # TODO: Update this!
     def computeConsensusSeq(self, matrix):
         '''
         Calculates a consensus sequence from the most recent alignment
