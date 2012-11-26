@@ -93,9 +93,14 @@ class OptimalAlignment:
         revConsensusSeq = [] # build the consensus sequence up in reverse
         x = width
         y = height
+        setOfNormalLetters = "ACTG"
         for i in range( max(width, height) ):
             if self.seq0[x-1] != self.seq1[y-1]:
-                mismatchScore = self.scoringMatrix[(self.seq0[x - 1], self.seq1[y - 1])]
+                if (self.seq0[x-1] in setOfNormalLetters) \
+                    and (self.seq1[y-1] in setOfNormalLetters):
+                    mismatchScore = self.scoringMatrix[(self.seq0[x - 1], self.seq1[y - 1])]
+                else:
+                    mismatchScore = TRANSVERSION
 
             if matrix[x][y] == matrix[x-1][y-1] + MATCH \
                 and self.seq0[x-1] == self.seq1[y-1]:
@@ -156,15 +161,18 @@ class OptimalAlignment:
             else:
                 matrix[0][x] = GAP_START_PENALTY
 
+        setOfNormalLetters = "ACTG"
         for x in range(1, width):
             for y in range(1, height):
                 if seq0[x-1] == seq1[y-1]:
                     scoreOfDiagonal = matrix[x-1][y-1] + MATCH
-                else:
+                elif (seq0[x-1] in setOfNormalLetters) and (seq1[y-1] in setOfNormalLetters):
                     scoreOfDiagonal = matrix[x-1][y-1] \
                                       + self.scoringMatrix[(seq0[x-1], seq1[y-1])]
+                else:
+                    scoreOfDiagonal = matrix[x-1][y-1] + TRANSVERSION
 
-                # If the [x-1][y] position was the result of starting a gap
+                    # If the [x-1][y] position was the result of starting a gap
                 if matrix[x-1][y] == matrix[x-2][y] + GAP_START_PENALTY:
                     xMinus1YScore = matrix[x-1][y] + GAP_CONTINUATION_PENALTY
                 else:

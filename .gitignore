@@ -113,3 +113,7 @@ dummy.fasta
 *.tre
 
 team_2_optimal_alignment_sensitive.py~
+
+out_of_africa.svg
+
+*.svg

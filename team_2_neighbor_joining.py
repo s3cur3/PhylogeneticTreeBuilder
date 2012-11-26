@@ -6,9 +6,10 @@ directly from your combination of alignment and FASTA data.
 Tyler Young
 '''
 
-
+from team_2_fasta_tools import countChanges
+from team_2_optimal_alignment_sensitive import *
 DEBUGGING = False
-import time
+ADD_DISTANCES = True
 
 def doNeighborJoining(alignmentData, fastaData):
     '''
@@ -192,15 +193,32 @@ def getNeighborJoiningPhylogeny(sequences, distMatrix):
             print(row)
         print( "Lowest dprime at: ", pairLoc)
         print("\t(",pairWithLowestDPrime[0].getReadableIdentifier(),", ",
-              pairWithLowestDPrime[1].getReadableIdentifier(),")\n", sep="")
+              pairWithLowestDPrime[1].getReadableIdentifier(),")\n",sep="")
         print( "Max dprime at: ", maxLoc)
         print("\t(",pairWithMaxDPrime[0].getReadableIdentifier(),", ",
-              pairWithMaxDPrime[1].getReadableIdentifier(),")\n", sep="")
+              pairWithMaxDPrime[1].getReadableIdentifier(),")\n",sep="")
+
+    # Get the distance to the new node's children in years
+    if ADD_DISTANCES:
+        print("Getting distances between ", pairWithMaxDPrime[0].getIdentifier(), "and",pairWithMaxDPrime[1].getIdentifier() )
+        CHANGES_PER_YEAR = 1.7E-8
+        consensusSeq = OptimalAlignment( pairWithMaxDPrime[0].getSequence(),
+                                         pairWithMaxDPrime[1].getSequence() ).getConsensusSeq()
+        delta = countChanges( consensusSeq )
+        print("Num changes: ", delta)
+        distInYears = (delta*(1/CHANGES_PER_YEAR))/len(consensusSeq)
+        distanceString = ":" + str(distInYears)
+        print("Optimal alignment begins", consensusSeq[0:100])
+        print("Dist in years is ",distInYears)
+
+    else:
+        distanceString = ""
+        consensusSeq = ""
 
 
     # Add a new node to the tree
-    newNodeName = "(" + pairWithMaxDPrime[0].getReadableIdentifier() + ", "\
-                  + pairWithMaxDPrime[1].getReadableIdentifier() + ")"
+    newNodeName = "(" + pairWithMaxDPrime[0].getReadableIdentifier() + distanceString + ", "\
+                  + pairWithMaxDPrime[1].getReadableIdentifier() + distanceString + ")"
     newNode = NeighborJoiningNode( newNodeName )
     distToChild0 = (distMatrix[maxLoc[0]][maxLoc[1]]
                     + distFromAllOthers[maxLoc[0]]
@@ -211,6 +229,7 @@ def getNeighborJoiningPhylogeny(sequences, distMatrix):
                     - distFromAllOthers[maxLoc[0]])/2
     newNode.addChild( pairWithMaxDPrime[1], distToChild1 )
     newNode.setParent( pairWithMaxDPrime[0].getParent() )
+    newNode.setConsensusSequence(consensusSeq)
 
     if DEBUGGING:
         print("New node's distance to its children: ", distToChild0, ", ", distToChild1)
@@ -338,3 +357,6 @@ class NeighborJoiningNode:
 
     def getTreeFile(self):
         return self.getIdentifier() + ";"
+
+    def setConsensusSequence(self, consensusSequence):
+        self.seq = consensusSequence

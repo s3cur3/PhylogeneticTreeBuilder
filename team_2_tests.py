@@ -20,8 +20,6 @@ for i in range(len(distMatrix)):
 finalNode = getNeighborJoiningPhylogeny(getNeighborJoiningSequences(fastaData), distMatrix)
 print(finalNode.getTreeFile())
 
-exit(1)
-
 genomes = [ "AATCACAGGTCTATCACCCTATTAACCACTCACGGGAGCTCTCCATGCATTTGGTATTTTCG",
             "GATCACAGGTCTATCACCCTATTAACCACTCACGGGAGCTCTCCATGCATTTGGTATTTTCGTCTGG",
             "GATCACAGGTCTATCACCCTATTAACCACTCACGGGAGCTCTCCATGCATTTGGTATTTTCGTCTGG",
@@ -82,4 +80,6 @@ print("\nBootstrapping on a real sequence (truncated)")
 for seq in getBootstrappedSequences(realOutputOfReadFASTA):
     print(seq[0:100])
 
-
+print("\nCounting changes . . .")
+delta = countChanges("ACTGXACTGBACTGYACTGQACTGRACTGZACTGACTG")
+print("Delta is ",delta,", should be 6.")

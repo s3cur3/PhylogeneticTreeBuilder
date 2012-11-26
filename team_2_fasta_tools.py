@@ -63,3 +63,15 @@ def getConsensusLetter(char0, char1):
 
     # At this point, one or more characters is either X, or -, so it's indeterminate
     return 'X'
+
+def countChanges( fastaConsensusSequence ):
+    '''
+    @param A consensus sequence in FASTA format (either a string or a list)
+    @return The number of changes (indels or substitutions) indicated by the
+            consensus sequence
+    '''
+    changes = 0
+    for letter in fastaConsensusSequence:
+        if letter not in "ACTG":
+            changes += 1
+    return changes
